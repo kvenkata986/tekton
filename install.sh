@@ -74,7 +74,7 @@ else
   case $1 in
     docker_registry)
         shift
-        if [ "$1" == "--UserName" and "$2" == "--Password" and "$3" == "--Email" ]; then
+        if [[ "$1" == "--UserName" ]] || [[ "$2" == "--Password" ]] || [[ "$3" == "--Email" ]]; then
            shift
            if [ "$1" == "" ]; then
               usage
