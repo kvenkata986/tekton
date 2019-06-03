@@ -61,7 +61,8 @@ usage() {
   echo "Usage:  ./install.sh deploy_tekton"
   echo "        ./install.sh docker_registry --UserName <NAME> --Password <Password> --Email <Email>  "
   echo "        ./install.sh create_PipelineResource"
-  echo "        ./install.sh create_task"
+  echo "        ./install.sh create_Task"
+  echo "        ./install.sh create_TaskRun"
   exit 1
 }
 
