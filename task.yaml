@@ -1,39 +1,31 @@
-apiVersion: tekton.dev/v1alpha1
+piVersion: tekton.dev/v1alpha1
 kind: Task
 metadata:
-  name: deploy-using-kubectl
+  name: build-docker-image-from-git-source
 spec:
   inputs:
     resources:
-      - name: source
+      - name: docker-source
         type: git
-      - name: image
-        type: image
     params:
-      - name: path
-        description: Path to the manifest to apply
-      - name: yqArg
+      - name: pathToDockerFile
+        description: The path to the dockerfile to build
+        default: /workspace/go/src/github.com/kvenkata986/helm-meetup/images/helm-meetup/Dockerfile
+      - name: pathToContext
         description:
-          Okay this is a hack, but I didn't feel right hard-coding `-d1` down
-          below
-      - name: yamlPathToImage
-        description:
-          The path to the image to replace in the yaml manifest (arg to yq)
+          The build context used by Kaniko
+          (https://github.com/GoogleContainerTools/kaniko#kaniko-build-contexts)
+        default: /workspace/go/src/github.com/kvenkata986/helm-meetup/
+  outputs:
+    resources:
+      - name: builtImage
+        type: image
   steps:
-    - name: replace-image
-      image: mikefarah/yq
-      command: ["yq"]
+    - name: build-and-push
+      image: gcr.io/kaniko-project/executor
+      command:
+        - /kaniko/executor
       args:
-        - "w"
-        - "-i"
-        - "${inputs.params.yqArg}"
-        - "${inputs.params.path}"
-        - "${inputs.params.yamlPathToImage}"
-        - "${inputs.resources.image.url}"
-    - name: run-kubectl
-      image: lachlanevenson/k8s-kubectl
-      command: ["kubectl"]
-      args:
-        - "apply"
-        - "-f"
-        - "${inputs.params.path}"
+        - --dockerfile=${inputs.params.pathToDockerFile}
+        - --destination=${outputs.resources.builtImage.url}
+        - --context=${inputs.params.pathToContext}
