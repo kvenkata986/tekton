@@ -25,7 +25,7 @@ Creating a pipeline for building and publishing Container images.
 
 To start using Tekton, you need to have:
 
-1. A GitHub account.
+1. A GitHub account
 2. Owner permissions for a project hosted on GitHub.
 3. Account and Docker Repository in [DockerHub](https://id.docker.com/login/?next=%2Fid%2Foauth%2Fauthorize%2F%3Fclient_id%3D43f17c5f-9ba4-4f13-853d-9d0074e349a7%26next%3Dhttps%253A%252F%252Fhub.docker.com%252F%26nonce%3DeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI0M2YxN2M1Zi05YmE0LTRmMTMtODUzZC05ZDAwNzRlMzQ5YTciLCJleHAiOjE1MzcxNDQzNjAsImlhdCI6MTUzNzE0NDA2MCwicmZwIjoidFpFbTdQN09jdWNJOHhhd04wQldldz09IiwidGFyZ2V0X2xpbmtfdXJpIjoiaHR0cHM6Ly9odWIuZG9ja2VyLmNvbS8ifQ.R5x-qEZ2ihnxVpWvYxLSbF40deBq7kGjiyU8jnX-0l4%26redirect_uri%3Dhttps%253A%252F%252Fhub.docker.com%252Fsso%252Fcallback%26response_type%3Dcode%26scope%3Dopenid%26state%3DeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI0M2YxN2M1Zi05YmE0LTRmMTMtODUzZC05ZDAwNzRlMzQ5YTciLCJleHAiOjE1MzcxNDQzNjAsImlhdCI6MTUzNzE0NDA2MCwicmZwIjoidFpFbTdQN09jdWNJOHhhd04wQldldz09IiwidGFyZ2V0X2xpbmtfdXJpIjoiaHR0cHM6Ly9odWIuZG9ja2VyLmNvbS8ifQ.R5x-qEZ2ihnxVpWvYxLSbF40deBq7kGjiyU8jnX-0l4 "DockerHub").
 4. Running Kubernetes Environment
