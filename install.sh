@@ -18,9 +18,9 @@ function  docker_registry () {
   # Create Docker-registry
   kubectl create secret docker-registry registry-secret \
     --docker-server https://index.docker.io/v1/ \
-    --docker-username $username \
-    --docker-password $password \
-    --docker-email $email \
+    --docker-username $USERNAME \
+    --docker-password $PASSWORD \
+    --docker-email $EMAIL \
     --namespace default
 
   kubectl patch secret registry-secret -p='{"metadata":{"annotations": {"tekton.dev/docker-0": "https://index.docker.io/v1/"}}}' \
@@ -41,7 +41,7 @@ function create_PipelineResource () {
   kubectl apply --filename prd.yaml
 }
 
-function create_task () {
+function create_Task () {
   echo "$(tput setaf 2)===============================================================$(tput setaf 9)"
   echo "$(tput setaf 2)======= Create Taskm  ========$(tput setaf 9)"
   echo "$(tput setaf 2)===============================================================$(tput setaf 9)"
