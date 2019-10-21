@@ -12,9 +12,9 @@ spec:
           name: krishna-git
     params:
       - name: pathToDockerFile
-        value: /workspace/docker-source/images/helm-meetup/Dockerfile
+        value: Dockerfile
       - name: pathToContext
-        value: /workspace/docker-source/images/helm-meetup/
+        value: /workspace/docker-source
   outputs:
     resources:
       - name: builtImage

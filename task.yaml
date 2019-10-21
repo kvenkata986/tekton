@@ -9,20 +9,25 @@ spec:
         type: git
     params:
       - name: pathToDockerFile
+        type: string
         description: The path to the dockerfile to build
-        default: /workspace/go/src/github.com/kvenkata986/helm-meetup/images/helm-meetup/Dockerfile
+        default: /workspace/docker-source/Dockerfile
       - name: pathToContext
+        type: string
         description:
           The build context used by Kaniko
           (https://github.com/GoogleContainerTools/kaniko#kaniko-build-contexts)
-        default: /workspace/go/src/github.com/kvenkata986/helm-meetup/
+        default: /workspace/docker-source
   outputs:
     resources:
       - name: builtImage
         type: image
   steps:
     - name: build-and-push
-      image: gcr.io/kaniko-project/executor
+      image: gcr.io/kaniko-project/executor:v0.13.0
+      env:
+        - name: "DOCKER_CONFIG"
+          value: "/builder/home/.docker/"
       command:
         - /kaniko/executor
       args:
