@@ -1,4 +1,4 @@
-piVersion: tekton.dev/v1alpha1
+apiVersion: tekton.dev/v1alpha1
 kind: Task
 metadata:
   name: build-docker-image-from-git-source
