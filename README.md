@@ -52,9 +52,9 @@ Tekton Pipelines is an OpenSource project by Google to Build, Run and Maintain C
 
 		./install.sh deploy_tekton
 
-3. Create Docker Registry Secret. Please update `<name>` with DockerHub username and `<Password>` with DockerHub Password and `<Email>` with DockerHub email
+3. Create Docker Registry Secret and Service Account
 
-        ./install.sh docker_registry --UserName <NAME> --Password <Password> --Email <Email>
+        ./install.sh docker_registry
 
 4. Now create `PipelineResource` for Github and DockerHub. Here we specify our git repository and Project in DockerHub were images are pushed
 
