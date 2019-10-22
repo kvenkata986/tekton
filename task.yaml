@@ -31,6 +31,6 @@ spec:
       command:
         - /kaniko/executor
       args:
-        - --dockerfile=${inputs.params.pathToDockerFile}
-        - --destination=${outputs.resources.builtImage.url}
-        - --context=${inputs.params.pathToContext}
+        - --dockerfile=Dockerfile
+        - --destination=docker.io/kvenkata986/welcome
+        - --context=/workspace/docker-source

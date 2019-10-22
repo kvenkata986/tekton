@@ -6,38 +6,29 @@ function deploy_tekton () {
   echo "$(tput setaf 2)====================== Deploying Tekton =======================$(tput setaf 9)"
   echo "$(tput setaf 2)===============================================================$(tput setaf 9)"
   # Install Tekton
-  kubectl apply --filename https://storage.googleapis.com/tekton-releases/latest/release.yaml
+  kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.7.0/release.yaml
   # NOTE: Wait for deploy
   ./utils/wait-for-pods.sh tekton
 }
 
 function  docker_registry () {
-  USERNAME=$1
-  PASSWORD=$2
-  EMAIL=$3
-  # Create Docker-registry
-  kubectl create secret docker-registry registry-secret \
-    --docker-server https://index.docker.io/v1/ \
-    --docker-username $USERNAME \
-    --docker-password $PASSWORD \
-    --docker-email $EMAIL \
-    --namespace default
+  echo "$(tput setaf 2)===============================================================$(tput setaf 9)"
+  echo "$(tput setaf 2)======= Create Secret For DockerHub and Service Account =======$(tput setaf 9)"
+  echo "$(tput setaf 2)===============================================================$(tput setaf 9)"
+  # Note: This yaml file creates Secret, which is used to store your DockerHub credentials
+  kubectl apply --filename secret.yaml
+  # Note: Thic yaml files creates Service Account, which is used to link the build process to the secret
+  kubectl apply --filename serviceaacount.yaml
 
-  kubectl patch secret registry-secret -p='{"metadata":{"annotations": {"tekton.dev/docker-0": "https://index.docker.io/v1/"}}}' \
-    --namespace default
-
-  kubectl patch sa default -n default \
-    --type=json \
-    -p="[{\"op\":\"add\",\"path\":\"/secrets/0\",\"value\":{\"name\": \"registry-secret\"}}]"
 }
 
 function create_PipelineResource () {
   echo "$(tput setaf 2)===============================================================$(tput setaf 9)"
   echo "$(tput setaf 2)======= Create Pipeline Resource For Git and DockerHub ========$(tput setaf 9)"
   echo "$(tput setaf 2)===============================================================$(tput setaf 9)"
-  # Note: This create Pipeline Resource for Git
+  # Note: This file creates Pipeline Resource for Git
   kubectl apply --filename prg.yaml
-  # Note: This Creates Pipeline Resource for DockerHub
+  # Note: This file creates Pipeline Resource for DockerHub
   kubectl apply --filename prd.yaml
 }
 
@@ -59,7 +50,7 @@ function create_TaskRun () {
 
 usage() {
   echo "Usage:  ./install.sh deploy_tekton"
-  echo "        ./install.sh docker_registry --UserName <NAME> --Password <Password> --Email <Email>  "
+  echo "        ./install.sh docker_registry"
   echo "        ./install.sh create_PipelineResource"
   echo "        ./install.sh create_Task"
   echo "        ./install.sh create_TaskRun"
@@ -73,22 +64,7 @@ else
   PASSWORD=$2
   EMAIL=$3
   case $1 in
-    docker_registry)
-        shift
-        if [[ "$1" == "--UserName" ]] || [[ "$2" == "--Password" ]] || [[ "$3" == "--Email" ]]; then
-           shift
-           if [ "$1" == "" ]; then
-              usage
-              exit 1
-           fi
-           USERNAME=$1
-           PASSWORD=$2
-           EMAIL=$3
-           docker_registry $USERNAME $PASSWORD $EMAIL
-        else
-           usage
-           exit 1
-        fi
+    docker_registry) deploy_tekton
     ;;
     deploy_tekton ) deploy_tekton
     ;;

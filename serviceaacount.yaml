@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: summit-dockerhub-cred
+secrets:
+  - name: summit-dockerhub

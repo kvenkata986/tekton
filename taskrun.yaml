@@ -3,6 +3,7 @@ kind: TaskRun
 metadata:
   name: build-docker-image-from-git-source-task-run
 spec:
+  serviceAccount: summit-dockerhub-cred
   taskRef:
     name: build-docker-image-from-git-source
   inputs:
