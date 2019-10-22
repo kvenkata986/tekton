@@ -62,7 +62,7 @@ Tekton Pipelines is an OpenSource project by Google to Build, Run and Maintain C
 
 5. Now Create a `Task` which downloads our repo specified in above step from github and using the `Dockerfile` from the downloaded repo, it builds Image using kaniko.
 
-		./install.sh create_task
+		./install.sh create_Task
 
 6. Now Create `TaskRun` to run above pipeline
 
